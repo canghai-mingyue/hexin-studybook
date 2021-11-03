@@ -1,5 +1,5 @@
 
-const testArr = [5, 6, 4, 3, 2, 7, 5, 1]
+let testArr = [5, 6, 4, 3, 2, 7, 5, 1];
 
 // 简单选择排序
 // 每次找到最小值与前面做交换
@@ -90,7 +90,7 @@ const quickSort = arr => {
     const getPivotIndex = (array, l, r) => {
         let pivot = array[l];
         while(l < r) {
-            // pivot取array[l]， 则下先从右边找一个小于pivot的值 放到array[l]上，pivot取array[r]，则相反
+            // pivot取array[l]， 则先从右边找一个小于pivot的值 放到array[l]上，pivot取array[r]，则相反
             // 此处须保持 l < r
             while(l < r && array[r] >= pivot) {
                 r--;
@@ -111,15 +111,42 @@ const quickSort = arr => {
     return arr
 }
 
+testArr = [5, 6, 4, 3, 2, 7, 5, 1]
 // 归并排序
-// 合并有序子数组
+// 同样是分治加递归的思想，合并有序子数组，先拆成两部分，分别使用归并排序，最后合并到一起。
 const mergeSort = arr => {
+    if(arr.length < 2) return arr;
+    let middle = arr.length >> 1;
+    // 拆成两部分
+    let left = arr.slice(0, middle),
+        right = arr.slice(middle);
 
+    // 递归实现合并有序数组
+    let mergeTwoArray = (arr1, arr2) => {
+        if(arr1.length < 1) return arr2;
+        if(arr2.length < 1) return arr1;
+        if(arr1[0] < arr2[0]) return [arr1[0], ...mergeTwoArray(arr1.slice(1), arr2)]
+        else return [arr2[0], ...mergeTwoArray(arr2.slice(1), arr1)]
+    }
+    // 迭代实现合并有序数组
+    mergeTwoArray = (arr1, arr2) => {
+        if(arr1.length < 1) return arr2;
+        if(arr2.length < 1) return arr1;
+        let result = [];
+        while(arr1.length && arr2.length) {
+            if(arr1[0] < arr2[0]) result.push(arr1.shift());
+            else result.push(arr2.shift());
+        }
+        result = result.concat(arr1.length ? arr1 : arr2);
+        return result;
+    }
+    // 对两部分分别使用递归排序，并合并
+    return mergeTwoArray(mergeSort(left), mergeSort(right))
 }
 
 
 
 
 
-console.log(quickSort(testArr), 'quickSort')
+console.log(mergeSort(testArr), 'mergeSort')
 
