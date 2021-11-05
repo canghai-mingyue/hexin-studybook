@@ -58,13 +58,14 @@ let rotateRight = function(head, k) {
     let kk = k % length;
     if(kk === 0) return head;
     // 在这之前与上一个思路一样
-
+    // 找到快指针的起始位置
     let slow = head,
         fast =head;
     while(kk > 0) {
         fast = fast.next;
         kk--;
     }
+    // 同时向后移动
     while(fast.next){
         fast = fast.next;
         slow = slow.next;
