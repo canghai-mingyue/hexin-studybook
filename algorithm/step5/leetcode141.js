@@ -23,3 +23,34 @@ var hasCycle = function(head) {
     }
     return false;
 };
+
+// 使用set
+var hasCycle = function(head) {
+    let set = new Set()
+    while(head) {
+        if(set.has(head)) return true;
+        else set.add(head);
+        head = head.next;
+    }
+    return false
+};
+
+// 标记
+var hasCycle = function(head) {
+    while(head) {
+        if(head.flag) return true
+        else head.flag = true;
+        head = head.next;
+    }
+    return false
+};
+
+// 利用js循环引用会报错的机制
+var hasCycle = function(head) {
+    try{
+        JSON.stringify(head)
+    } catch (err) {
+        return true
+    }
+    return false
+};
