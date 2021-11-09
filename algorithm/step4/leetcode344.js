@@ -10,7 +10,7 @@ var reverseString = function(s) {
     return s.reverse();
 };
 
-// 手写实现
+// 手写实现，首尾两两交换即可
 reverseString = function(s) {
     let left = 0,
         right = s.length - 1;
