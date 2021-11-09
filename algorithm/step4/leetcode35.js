@@ -32,7 +32,8 @@ var searchInsert = function(nums, target) {
         right = nums.length - 1;
     while(left <= right) {
         let mid = (left + right) >> 1;
-        // 此处的 等于的情况 以及 while中 的等号， 最后会让left加到第一个大于等于target的位置，就可以直接返回left
+        // 此处的 等于的情况 以及 while中 的等号， 最后会让left加到第一个大于等于target的位置
+        // 不需要做那么多等于的判断，就可以直接返回left
         if(nums[mid] >= target) right = mid - 1;
         else left = mid + 1;
     }
