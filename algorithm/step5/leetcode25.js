@@ -21,7 +21,7 @@ var reverseKGroup = function(head, k) {
     let pre = virtualNode;
     // head表示每组节点的第一个节点
     while(head) {
-        // 先找到魅族节点的最后一个节点tail
+        // 先找到每组节点的最后一个节点tail
         let tail = head;
         for(let i = 0; i < k - 1; i++) {
             tail = tail.next;
