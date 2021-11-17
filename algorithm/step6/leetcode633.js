@@ -71,8 +71,9 @@ var judgeSquareSum = function(c) {
 // 首先，任何一个合数都可以由多个质数相乘得到，也就是质因子。
 // 其次，费马平方和定理
 // 一个非负整数 c 如果能够表示为两个整数的平方和，当且仅当 c 的所有形如 4k + 3 的质因子的幂均为偶数。
+// 注意： c 至多只有一个质因数大于 根号c！！
 var judgeSquareSum = function(c) {
-    let max = parseInt(Math.sqrt(c));       // 因数的可能最大值
+    let max = parseInt(Math.sqrt(c));       // 除去可能存在的大于根号c的质因数之外，质因数的可能最大值
     // 质数从2开始
     for(let factor = 2; factor <= max; factor++) {
         // 如果factor不是c的因数，则直接找下一个因数
@@ -88,5 +89,6 @@ var judgeSquareSum = function(c) {
     }
     // 例如 11 这样的用例，由于上面的 for 循环里 factor <= max ，base == 11 的时候不会进入循环体
     // 因此在退出循环以后需要再做一次判断
+    // 这里其实就是检验 可能存在的大于根号c的质因数，它的幂必定为1，因此检验其是否形如 4k + 3， 不形如才符合条件
     return c % 4 !== 3;
 };
