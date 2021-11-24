@@ -4,6 +4,56 @@
  * @param {number[]} hours
  * @return {number}
  */
-var longestWPI = function(hours) {
+/**
+ * @param {number[]} hours
+ * @return {number}
+ */
+// 暴力双循环
+var longestWPI = function (hours) {
+    let good = 0,
+        bad = 0;
+    let preSum = [0]
+    // 前缀和
+    hours.forEach(hour => {
+        if(hour > 8) good++;
+        else bad++;
+        preSum.push(good - bad)
+    })
+    // 这一步与leetcode962很类似，除了不能为等号的情况
+    let max = 0
+    for (let i = 0; i < preSum.length-1; i++){
+        for (let j = i + 1; j < preSum.length; j++){
+            if (preSum[j] - preSum[i] >0){
+                max = Math.max(max, j-i)
+            }
+        }
+    }
+    return max
+};
 
+// 使用单调栈
+var longestWPI = function(hours) {
+    let good = 0,
+        bad = 0;
+    let preSum = [0]
+    hours.forEach(hour => {
+        if(hour > 8) good++;
+        else bad++;
+        preSum.push(good - bad)
+    })
+    // 单减栈
+    let stack = []
+    stack.push(0)
+    for (let i = 1; i < preSum.length; i++){
+        if (preSum[stack[stack.length-1]] > preSum[i]) stack.push(i)
+    }
+
+    // 从右到左求最大跨度
+    let max = 0
+    for (let i = preSum.length-1; i > max; i--){
+        while(stack.length > 0 && preSum[stack[stack.length-1]] < preSum[i]){
+            max = Math.max(max, i - stack.pop() )
+        }
+    }
+    return max
 };

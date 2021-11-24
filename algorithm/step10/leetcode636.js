@@ -29,6 +29,7 @@ var exclusiveTime = function(n, logs) {
     let prev = 0;
     for(const [id, status, timeStr] of logArray) {
         const time = parseInt(timeStr)
+        // time - prev 即为当前栈顶的函数运行的时间
         if(status === 'start') {
             // 这里要考虑栈为空的情况
             if(stack.length > 0) res[parseInt(stack[stack.length-1][0])] += time - prev;
@@ -36,6 +37,7 @@ var exclusiveTime = function(n, logs) {
             prev = time;
         } else {
             stack.pop()
+            // end 要加 1
             res[parseInt(id)] += time - prev + 1;
             prev = time + 1;
         }
