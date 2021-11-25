@@ -33,6 +33,7 @@ var longestWPI = function (hours) {
 
 // 使用单调栈
 var longestWPI = function(hours) {
+    // 求前缀和
     let good = 0,
         bad = 0;
     let preSum = [0]
@@ -41,7 +42,7 @@ var longestWPI = function(hours) {
         else bad++;
         preSum.push(good - bad)
     })
-    // 单减栈
+    // 单减栈  栈存的是前缀和数组 值单调递减的 index
     let stack = []
     stack.push(0)
     for (let i = 1; i < preSum.length; i++){
@@ -51,6 +52,7 @@ var longestWPI = function(hours) {
     // 从右到左求最大跨度
     let max = 0
     for (let i = preSum.length-1; i > max; i--){
+        // 与 962 题目的区别在于这里的的判断 不包含相等的情况
         while(stack.length > 0 && preSum[stack[stack.length-1]] < preSum[i]){
             max = Math.max(max, i - stack.pop() )
         }
