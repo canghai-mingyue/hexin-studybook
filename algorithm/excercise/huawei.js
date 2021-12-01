@@ -15,8 +15,8 @@ const rsa = num => {
         b = -1;
     for(let i = 2; i * i <= num; i++) {
         if(isPrime(i) && num % i === 0 && isPrime(num / i)){
-            a = i,
-                b = num/i
+            a = i;
+            b = num/i
         }
     }
     console.log(a, b)
