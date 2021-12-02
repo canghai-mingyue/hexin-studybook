@@ -4,6 +4,7 @@
  * @param {string[]} ops
  * @return {number}
  */
+// 遍历分类讨论，最后求和即可
 var calPoints = function(ops) {
     let arr = [];
     ops.forEach(char => {
