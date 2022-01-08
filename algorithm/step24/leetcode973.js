@@ -102,6 +102,40 @@ class Heap {
 }
 
 
+
+// 快排的思路
+var kClosest = function(points, k) {
+    const getDistance = point => point[0]*point[0] + point[1]*point[1]
+    const quickSort = (points, start, end, k) => {
+        const pivot = getDistance(points[start]),
+            pivotPoint = [...points[start]]
+        let l = start, r = end;
+        while(l < r) {
+            while(l < r && getDistance(points[r]) >= pivot) {
+                r--;
+            }
+            points[l] = points[r];
+            while(l < r && getDistance(points[l]) <= pivot) {
+                l++;
+            }
+            points[r] = points[l];
+        }
+        points[r] = pivotPoint
+        // 注意这里是 k-1 ，因为 r 为索引
+        if(r === k-1) return;
+        else if(r < k-1) quickSort(points, r+1, end, k);
+        else quickSort(points, start, r-1, k);
+    }
+    quickSort(points, 0, points.length-1, k)
+    console.log(points)
+    return points.slice(0, k)
+};
+
+
+
+
+
+
 var kClosest = function (points, K) {
     if (points.length <= K) {
         return points;
@@ -141,36 +175,5 @@ function distance(point) {  // 求point到原点的距离
     return point[0] * point[0] + point[1] * point[1];
 }
 
-
-
-
-
-// 快排的思路
-var kClosest = function(points, k) {
-    const getDistance = point => point[0]*point[0] + point[1]*point[1]
-    const quickSort = (points, start, end, k) => {
-        const pivot = getDistance(points[start]),
-            pivotPoint = [...points[start]]
-        let l = start, r = end;
-        while(l < r) {
-            while(l < r && getDistance(points[r]) >= pivot) {
-                r--;
-            }
-            points[l] = points[r];
-            while(l < r && getDistance(points[l]) <= pivot) {
-                l++;
-            }
-            points[r] = points[l];
-        }
-        points[r] = pivotPoint
-        // 注意这里是 k-1 ，因为 r 为索引
-        if(r === k-1) return;
-        else if(r < k-1) quickSort(points, r+1, end, k);
-        else quickSort(points, start, r-1, k);
-    }
-    quickSort(points, 0, points.length-1, k)
-    console.log(points)
-    return points.slice(0, k)
-};
 
 kClosest([[0,1],[1,0]], 2)
