@@ -70,7 +70,7 @@ var longestConsecutive = function(nums) {
 
 // 并查集
 var longestConsecutive = function(nums) {
-    const parents = new Map();
+    const parents = new Map(); // 存储的是改数字可以到达的右边界
     nums.forEach(num => {
         parents.set(num, num)
     })
