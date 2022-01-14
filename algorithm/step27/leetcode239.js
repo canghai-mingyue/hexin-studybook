@@ -107,3 +107,64 @@ class MaxHeap {
         return this.data.length;
     }
 }
+
+
+// 双端队列，存储 index， 其对应的值为单调递减
+var maxSlidingWindow = function(nums, k) {
+    let queue = [0],    // 双端队列，存储当前窗口元素的 index，其对应的值要单调递减
+        res = [];
+    // 根据初始窗口将队列初始化
+    for(let i = 1; i < k; i++) {
+        // 维护队列 对应值 的单调性
+        while(nums[i] > nums[queue[queue.length-1]]) {
+            queue.pop()
+        }
+        queue.push(i)
+    }
+    res.push(nums[queue[0]])
+    // 窗口开始滑动
+    for(let i = k; i < nums.length; i++) {
+        // 维护队列只存储当前窗口的元素
+        if(i - queue[0] >= k ) queue.shift()
+        // 维护队列 对应值 的单调性
+        while(nums[i] >= nums[queue[queue.length-1]]) {
+            queue.pop()
+        }
+        queue.push(i)
+        // 本窗口的最大值就是对首对应的元素
+        res.push(nums[queue[0]])
+    }
+    return res;
+}
+
+// 分块 + 预处理  将数组分为 k 个一组的块
+// left[i]为块开始到left[i]的最大值，right[j]为块结束到right[j]的最大值
+var maxSlidingWindow = function(nums, k) {
+    const length = nums.length;
+    let res = [],
+        left = new Array(length).fill(0),
+        right = new Array(length).fill(0);
+    // 分块 预处理 left 与 right
+    for(let i = 0; i < length; i++){
+        // 块的分界点
+        if(i % k === 0) left[i] = nums[i]
+        // 非分界点
+        else left[i] = Math.max(nums[i], left[i-1])
+
+        let j = length - 1 -i;
+        // 块的分界点 以及处理最后一个块元素不足 k 个的情况
+        if((j + 1) % k === 0 || j === length - 1) right[j] = nums[j]
+        // 非分界点
+        else right[j] = Math.max(nums[j], right[j+1])
+    }
+    for(let i = 0; i < length - k + 1; i++){
+        // 窗口范围为 i 到 j ，最大值即为 left[j] 和 right[i] 中较大的那个
+        res.push(Math.max(right[i], left[i + k - 1]))
+    }
+    return res;
+}
+
+
+
+
+
