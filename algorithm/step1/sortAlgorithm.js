@@ -86,7 +86,7 @@ const quickSort = arr => {
             fastSort(array, pivotIndex + 1, r);
         }
     }
-    // 获取pivot(基准值)的index，并对数据进行分组
+    // 对数据进行分组，并返回 pivot (基准值)的 index
     const getPivotIndex = (array, l, r) => {
         let pivot = array[l];
         while(l < r) {
