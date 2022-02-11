@@ -30,3 +30,12 @@ var rangeSum = function(nums, n, left, right) {
 };
 
 rangeSum([1,2,3,4], 4, 1, 5)
+
+
+var rangeSum = function(nums, n, left, right) {
+    const prefixSums = new Array(n);
+    prefixSums[0] = nums[0]
+    for (let i = 1; i < n; i++) {
+        prefixSums[i] = prefixSums[i-1] + nums[i]
+    }
+}
