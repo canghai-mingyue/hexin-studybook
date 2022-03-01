@@ -568,7 +568,7 @@ sub.attach(jj)
 
 sub.setState('灯亮了来电了')
 
-// 20.EventEmitter 实现
+// 20.EventEmitter 实现 其实就是eventBus
 class EventEmitter {
     constructor() {
         this.events = {};
