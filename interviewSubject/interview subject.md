@@ -29,6 +29,12 @@ https://www.cnblogs.com/onepixel/p/7674659.html
 
 ## 3、CSS
 
+### 行内元素与块级元素
+
+行内元素设置width height 上下margin 与 padding 无效
+
+行内元素不能包含块级元素
+
 ### flex布局
 
 弹性布局 主轴 交叉轴
@@ -141,7 +147,11 @@ less是通过客户端处理的，scss是通过服务端处理，相比较之下
 
 (5) 如果构造函数返回非空对象，则返回该对象；否则，返回刚创建的新对象。
 
-
+```javascript
+var obj  = {};
+obj.__proto__ = Base.prototype;
+Base.call(obj);
+```
 
 (1) 创建一个新对象；
 (2) 将构造函数的作用域赋给新对象（因此 this 就指向了这个新对象） ；
@@ -1231,6 +1241,38 @@ addTen(8).then(console.log); // 18
 ### 倒计时函数
 
 ### 手写eventBus
+
+```javascript
+class EventBus {
+    constructor(){
+        this.eventContainer = this.eventContainer || new Map() //用一个容器存放事件
+    }
+    on(type,callback){
+        if(!this.eventContainer.has(type)){
+            //如果容器里面没有这种类型的事件，就增加
+            this.eventContainer.set(type,callback)
+
+        }
+    }
+    off(type){
+        if(this.eventContainer.has(type)){
+          
+            this.eventContainer.delete(type)
+
+        }
+    }
+    emit(type){
+        let fn = this.eventContainer.get(type)
+        fn.apply(this,[...arguments].slice(1))
+    }
+}
+
+let ev = new EventBus()
+ev.on('myevent',name=>{console.log('hello,',name)})
+ev.emit('myevent','jack')
+```
+
+
 
 ### 手写发布订阅
 
