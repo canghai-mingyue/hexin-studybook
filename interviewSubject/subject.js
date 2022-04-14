@@ -378,6 +378,16 @@ if (!Promise.allSettled) {
         });
     }
 }
+// 使用Promise.all 实现Promise.allSettled
+if (!Promise.allSettled) {
+    Promise.allSettled = function (promises) {
+        return Promise.all(promises.map(p => Promise.resolve(p).then(res => {
+            return { status: 'fulfilled', value: res }
+        }, error => {
+            return { status: 'rejected', reason: error }
+        })));
+    };
+}
 
 
 // 11.Ajax的实现
